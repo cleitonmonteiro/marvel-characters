@@ -6,6 +6,7 @@ import {MODULE_NAME} from './constants';
 const initialState = {
   characters: [],
   favorites: {},
+  selectedCharacterId: 0,
 };
 
 const charactersSlice = createSlice({
@@ -15,6 +16,9 @@ const charactersSlice = createSlice({
     toggleFavorite: (state, {payload}) => {
       const last = state.favorites[payload];
       state.favorites[payload] = !last;
+    },
+    selectCharacter: (state, {payload}) => {
+      state.selectedCharacterId = payload;
     },
     reset: () => initialState,
   },
@@ -32,6 +36,6 @@ const charactersSlice = createSlice({
   },
 });
 
-export const {reset, toggleFavorite} = charactersSlice.actions;
+export const {reset, toggleFavorite, selectCharacter} = charactersSlice.actions;
 
 export default charactersSlice.reducer;

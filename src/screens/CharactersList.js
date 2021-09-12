@@ -7,21 +7,20 @@ import {getCharacters, getFavorites} from '../redux/characters/selectors';
 import {fetchCharacters} from '../redux/characters/actions';
 import ListItem from '../components/Listitem';
 import {SCREENS} from '../navigation/constants';
-import {toggleFavorite} from '../redux/characters/slice';
+import {selectCharacter, toggleFavorite} from '../redux/characters/slice';
 
 export const CharactersList = ({navigation}) => {
   const dispatch = useDispatch();
   const characters = useSelector(getCharacters);
   const favorites = useSelector(getFavorites);
 
-  console.log('REnder MAIN', CharactersList);
-
   useEffect(() => {
     dispatch(fetchCharacters());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleDetailClick = item => {
+  const handleDetailClick = id => {
+    dispatch(selectCharacter(id));
     navigation.navigate(SCREENS.CharactersDetails);
   };
 
@@ -33,7 +32,7 @@ export const CharactersList = ({navigation}) => {
           return (
             <ListItem
               title={item.name}
-              onTap={handleDetailClick}
+              onTap={() => handleDetailClick(item.id)}
               isFavorite={favorites[item.id]}
               onFavorite={() => dispatch(toggleFavorite(item.id))}
             />

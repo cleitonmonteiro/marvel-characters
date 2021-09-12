@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Box, Heading, Row, IconButton, Column} from 'native-base';
+import {Image, Box, Heading, Row, IconButton} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from 'react-native';
 
@@ -11,12 +11,14 @@ const ListItem = ({
   imageUrl = 'https://sample-example.nativebase.io/static/media/dawki-river.ebbf5434.png',
   imageAlt = title,
 }) => {
-  console.log('Render', title);
+  const iconName = isFavorite ? 'favorite' : 'favorite-outline';
+
   return (
     <TouchableOpacity onPress={onTap} activeOpacity={0.9}>
       <Box bg="white" marginX="2" marginY="1" shadow={2} rounded="lg">
-        <Row space={4} justifyContent="space-between">
+        <Row space={4} justifyContent="space-between" alignItems="center">
           <Image
+            testID={`image-${title}`}
             source={{
               uri: imageUrl,
             }}
@@ -24,16 +26,12 @@ const ListItem = ({
             size={'md'}
             alt={imageAlt}
           />
-          <Column>
-            <Heading size="sm">{title}</Heading>
-          </Column>
+          <Heading size="sm">{title}</Heading>
           <IconButton
-            colorScheme="emerald"
+            p={0}
+            marginRight={2}
             icon={
-              <Icon
-                name={isFavorite ? 'favorite' : 'favorite-outline'}
-                size={30}
-              />
+              <Icon testID={`icon-${iconName}`} name={iconName} size={30} />
             }
             onPress={onFavorite}
           />
