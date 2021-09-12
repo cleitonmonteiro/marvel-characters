@@ -1,28 +1,24 @@
-import React, {useEffect} from 'react';
-import {FlatList} from 'native-base';
+import {FlatList, View} from 'native-base';
+import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {View} from 'react-native';
-
-import {getCharacters, getFavorites} from '../redux/characters/selectors';
-import {fetchCharacters} from '../redux/characters/actions';
-import ListItem from '../components/Listitem';
 import {SCREENS} from '../navigation/constants';
+import {getFavoritesIds} from '../redux/characters/selectors';
 import {selectCharacter, toggleFavorite} from '../redux/characters/slice';
+import ListItem from './Listitem';
+import EmptyList from './EmptyList';
 
-export const CharactersList = ({navigation}) => {
+export const CharactersList = ({navigation, characters, emptyMessage}) => {
   const dispatch = useDispatch();
-  const characters = useSelector(getCharacters);
-  const favorites = useSelector(getFavorites);
-
-  useEffect(() => {
-    dispatch(fetchCharacters());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const favoritesIds = useSelector(getFavoritesIds);
 
   const handleDetailClick = id => {
     dispatch(selectCharacter(id));
-    navigation.navigate(SCREENS.CharactersDetails);
+    navigation.navigate(SCREENS.CHARACTERS_DETAILS);
   };
+
+  if (!characters?.length) {
+    return <EmptyList message={emptyMessage} />;
+  }
 
   return (
     <View>
@@ -33,7 +29,7 @@ export const CharactersList = ({navigation}) => {
             <ListItem
               title={item.name}
               onTap={() => handleDetailClick(item.id)}
-              isFavorite={favorites[item.id]}
+              isFavorite={favoritesIds[item.id]}
               onFavorite={() => dispatch(toggleFavorite(item.id))}
             />
           );

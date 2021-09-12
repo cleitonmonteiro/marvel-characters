@@ -8,11 +8,12 @@ export const fetchCharacters = createAsyncThunk(FETCH_CHARACTERS, async () => {
 });
 
 export const fetchCharactersRequested = (state, action) => {
-  // TODO
+  state.loading = true;
 };
 
 export const fetchCharactersFailed = (state, action) => {
-  // TODO
+  state.loading = false;
+  state.hasError = true;
 };
 
 export const fetchCharactersSucceeded = (state, action) => {
@@ -20,4 +21,6 @@ export const fetchCharactersSucceeded = (state, action) => {
     data: {results},
   } = action.payload;
   state.characters = results;
+  state.loading = false;
+  state.hasError = false;
 };

@@ -1,4 +1,4 @@
 export const SCREENS = {
-  CharactersList: 'CharactersList',
-  CharactersDetails: 'CharactersDetails',
+  CHARACTERS_SCREEN: 'CharactersScreen',
+  CHARACTERS_DETAILS: 'CharactersDetails',
 };

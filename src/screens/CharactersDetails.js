@@ -12,7 +12,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  getFavorites,
+  getFavoritesIds,
   getSelectedCharacter,
 } from '../redux/characters/selectors';
 import {toggleFavorite} from '../redux/characters/slice';
@@ -21,7 +21,7 @@ import {handleEmptyDescription} from '../utils/uiUtils';
 export const CharactersDetails = ({route}) => {
   const dispatch = useDispatch();
   const selectedCharacter = useSelector(getSelectedCharacter);
-  const favorites = useSelector(getFavorites);
+  const favorites = useSelector(getFavoritesIds);
   const {name, description, id} = selectedCharacter;
 
   return (

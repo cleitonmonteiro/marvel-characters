@@ -6,6 +6,8 @@ import {MODULE_NAME} from './constants';
 const initialState = {
   characters: [],
   favorites: {},
+  loading: false,
+  hasError: false,
   selectedCharacterId: 0,
 };
 
