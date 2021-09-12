@@ -8,6 +8,7 @@ import CharactersScreen from '../screens/CharactersScreen';
 import CharactersDetails from '../screens/CharactersDetails';
 import {SCREENS} from './constants';
 import Favorites from '../screens/Favorites';
+import ShareIcon from '../components/ShareIcon';
 
 const Stack = createNativeStackNavigator();
 
@@ -62,7 +63,11 @@ const RootNavigator = () => {
           name="Characters"
           component={StackNavigator}
         />
-        <Tab.Screen name="Favorites" component={Favorites} />
+        <Tab.Screen
+          name="Favorites"
+          options={{headerRight: _ => <ShareIcon />}}
+          component={Favorites}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -26,3 +26,7 @@ export const getFavorites = createSelector(
     );
   },
 );
+
+export const getFavoritesNames = createSelector(getFavorites, favorites => {
+  return favorites.map(item => item.name).join(', ');
+});
