@@ -34,7 +34,9 @@ export const CharactersList = ({
         keyExtractor={item => String(item.id)}
         onEndReached={onEndReached}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          onRefresh && (
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          )
         }
         ListFooterComponent={() => {
           if (!isLoadingMore) {
