@@ -1,5 +1,6 @@
 {
   "name": "marvelcharacters",
+  "description": "Mobile app to show the Marvel Characters",
   "version": "0.0.1",
   "private": true,
   "scripts": {
