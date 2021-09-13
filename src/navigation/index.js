@@ -9,6 +9,8 @@ import CharactersDetails from '../screens/CharactersDetails';
 import {SCREENS} from './constants';
 import Favorites from '../screens/Favorites';
 import ShareIcon from '../components/ShareIcon';
+import CharactersSearch from '../screens/CharactersSearch';
+import {IconButton} from 'native-base';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,12 +20,25 @@ const StackNavigator = () => {
       <Stack.Screen
         name={SCREENS.CHARACTERS_SCREEN}
         component={CharactersScreen}
-        options={{title: 'Marvel Characters'}}
+        options={({navigation}) => ({
+          title: 'Marvel Characters',
+          headerRight: _ => (
+            <IconButton
+              icon={<Icon name="search" size={24} />}
+              onPress={() => navigation.navigate(SCREENS.CHARACTERS_SEARCH)}
+            />
+          ),
+        })}
       />
       <Stack.Screen
         name={SCREENS.CHARACTERS_DETAILS}
         component={CharactersDetails}
         options={{title: 'Details'}}
+      />
+      <Stack.Screen
+        name={SCREENS.CHARACTERS_SEARCH}
+        component={CharactersSearch}
+        options={{title: 'Search'}}
       />
     </Stack.Navigator>
   );
@@ -55,8 +70,6 @@ const RootNavigator = () => {
               />
             );
           },
-          tabBarActiveTintColor: 'red',
-          tabBarInactiveTintColor: 'gray',
         })}>
         <Tab.Screen
           options={{headerShown: false}}

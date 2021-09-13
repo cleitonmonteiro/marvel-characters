@@ -1,5 +1,6 @@
 import {extendTheme} from 'native-base';
 
+// TODO: change to another color palette
 export const theme = extendTheme({
   colors: {
     primary: {

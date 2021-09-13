@@ -3,7 +3,7 @@ import characters from './mocks/characters';
 
 export const fetchAll = () => {
   return new Promise((resolve, reject) =>
-    setTimeout(() => resolve(characters), 2000),
+    setTimeout(() => resolve(characters), 1000),
   );
   return new Promise((resolve, reject) =>
     client
