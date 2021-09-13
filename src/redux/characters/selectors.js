@@ -3,7 +3,8 @@ import {MODULE_NAME} from './constants';
 
 export const getRawCharacters = state => state[MODULE_NAME].raw;
 export const getCharactersIds = state => state[MODULE_NAME].home;
-export const getCharacters = state => state[MODULE_NAME].characters;
+export const getOffset = state => state[MODULE_NAME].offset;
+export const getMaxCharacters = state => state[MODULE_NAME].total;
 export const getLoading = state => state[MODULE_NAME].loading;
 export const getHasError = state => state[MODULE_NAME].hasError;
 export const getFavoritesIds = state => state[MODULE_NAME].favorites;
@@ -26,13 +27,9 @@ export const getSelectedCharacter = createSelector(
   },
 );
 
-export const getFavorites = createSelector(
-  getRawCharacters,
-  getFavoritesIds,
-  (characters, favoritesIds) => {
-    return favoritesIds.map(id => characters[id]);
-  },
-);
+export const getFavorites = createSelector(getRawCharacters, characters => {
+  return Object.values(characters).filter(item => item?.favorite);
+});
 
 export const getFavoritesNames = createSelector(getFavorites, favorites => {
   return favorites.map(item => item.name).join(', ');

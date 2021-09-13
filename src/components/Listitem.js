@@ -4,7 +4,7 @@ import {Image, Box, Heading, Row, IconButton} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {selectCharacter, toggleFavorite} from '../redux/characters/slice';
+import {selectCharacter, setFavorite} from '../redux/characters/slice';
 import {useNavigation} from '@react-navigation/core';
 import {SCREENS} from '../navigation/constants';
 
@@ -24,8 +24,11 @@ const ListItem = ({
     navigation.navigate(SCREENS.CHARACTERS_DETAILS);
   }, [id]);
 
-  const handleFavorite = useCallback(() => dispatch(toggleFavorite(id)), [id]);
-
+  const handleFavorite = useCallback(
+    () => dispatch(setFavorite({id, value: !isFavorite})),
+    [isFavorite],
+  );
+  // TODO: fixes long title overflow
   return (
     <TouchableOpacity onPress={handleDetailClick} activeOpacity={0.9}>
       <Box bg="white" marginX="2" marginY="1" shadow={2} rounded="lg">

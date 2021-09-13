@@ -1,10 +1,13 @@
-import React, {useEffect} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {
   getLoading,
   getHasError,
   getHomeCharacters,
+  getOffset,
+  getMaxCharacters,
 } from '../redux/characters/selectors';
 import {fetchCharacters} from '../redux/characters/actions';
 import CharactersList from '../components/CharactersList';
@@ -16,13 +19,24 @@ export const CharactersScreen = ({navigation}) => {
   const characters = useSelector(getHomeCharacters);
   const isLoading = useSelector(getLoading);
   const hasError = useSelector(getHasError);
+  const offset = useSelector(getOffset);
+  const total = useSelector(getMaxCharacters);
+  const isLoadingMore = isLoading && !!offset;
+  const charactersSize = characters.length;
 
-  useEffect(() => {
-    dispatch(fetchCharacters());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleLoadMore = useCallback(() => {
+    if (charactersSize < total) {
+      dispatch(fetchCharacters(offset));
+    }
+  }, [offset, charactersSize, total]);
 
-  if (isLoading) {
+  const handleInitialLoad = useCallback(() => {
+    dispatch(fetchCharacters(0));
+  }, [offset]);
+
+  useEffect(handleInitialLoad, []);
+
+  if (isLoading && !isLoadingMore) {
     return <Loading />;
   }
 
@@ -35,6 +49,10 @@ export const CharactersScreen = ({navigation}) => {
       navigation={navigation}
       characters={characters}
       emptyMessage="Not characters found."
+      onRefresh={handleInitialLoad}
+      refreshing={isLoading && !isLoadingMore}
+      onEndReached={handleLoadMore}
+      isLoadingMore={isLoadingMore}
     />
   );
 };

@@ -2,10 +2,13 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {FETCH_CHARACTERS} from './constants';
 import * as charactersApi from '../../api/charactersApi';
 
-export const fetchCharacters = createAsyncThunk(FETCH_CHARACTERS, async () => {
-  const data = await charactersApi.fetchAll();
-  return data;
-});
+export const fetchCharacters = createAsyncThunk(
+  FETCH_CHARACTERS,
+  async offset => {
+    const data = await charactersApi.fetchAll(offset);
+    return data;
+  },
+);
 
 export const fetchCharactersRequested = (state, action) => {
   state.loading = true;
@@ -18,8 +21,24 @@ export const fetchCharactersFailed = (state, action) => {
 
 export const fetchCharactersSucceeded = (state, action) => {
   const {
-    data: {results},
+    data: {results, offset, total},
   } = action.payload;
+
+  // keeping only favorites on override
+  if (offset === 0) {
+    const favorites = {};
+    state.favorites = {};
+    state.home = [];
+    Object.values(state.raw)
+      .filter(item => item.favorite)
+      .forEach(character => {
+        const id = character.id;
+        state.home.push(id);
+        state.favorites[character.id] = true;
+        favorites[character.id] = character;
+      });
+    state.raw = favorites;
+  }
 
   results?.forEach(character => {
     const {id, name, description, thumbnail} = character;
@@ -28,15 +47,17 @@ export const fetchCharactersSucceeded = (state, action) => {
     if (!state.home.includes(id)) {
       state.home.push(id);
     }
+    const favorite = !!state.raw[id]?.favorite;
     state.raw[id] = {
       id,
       name,
       description,
+      favorite,
       imageUrl: `${path}.${extension}`,
     };
   });
-
-  state.characters = results;
+  state.total = total;
   state.loading = false;
   state.hasError = false;
+  state.offset = offset + 20;
 };

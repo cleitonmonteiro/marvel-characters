@@ -12,18 +12,14 @@ import React from 'react';
 import {useWindowDimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  getFavoritesIds,
-  getSelectedCharacter,
-} from '../redux/characters/selectors';
-import {toggleFavorite} from '../redux/characters/slice';
+import {getSelectedCharacter} from '../redux/characters/selectors';
+import {setFavorite} from '../redux/characters/slice';
 import {handleEmptyDescription} from '../utils/uiUtils';
 
-export const CharactersDetails = ({route}) => {
+export const CharactersDetails = () => {
   const dispatch = useDispatch();
   const selectedCharacter = useSelector(getSelectedCharacter);
-  const favorites = useSelector(getFavoritesIds);
-  const {name, description, id, imageUrl} = selectedCharacter;
+  const {name, description, id, imageUrl, favorite} = selectedCharacter;
   const {width} = useWindowDimensions();
 
   return (
@@ -46,11 +42,11 @@ export const CharactersDetails = ({route}) => {
             p={0}
             icon={
               <Icon
-                name={favorites.includes(id) ? 'favorite' : 'favorite-outline'}
+                name={favorite ? 'favorite' : 'favorite-outline'}
                 size={30}
               />
             }
-            onPress={() => dispatch(toggleFavorite(id))}
+            onPress={() => dispatch(setFavorite({id, value: !favorite}))}
           />
         </Row>
         <Divider />

@@ -6,8 +6,9 @@ import {MODULE_NAME} from './constants';
 const initialState = {
   raw: {},
   home: [],
-  favorites: [],
-  characters: [],
+  offset: 0,
+  total: 0,
+  favorites: {},
   loading: false,
   hasError: false,
   selectedCharacterId: 0,
@@ -17,13 +18,13 @@ const charactersSlice = createSlice({
   name: MODULE_NAME,
   initialState,
   reducers: {
-    toggleFavorite: (state, {payload}) => {
-      const index = state.favorites.indexOf(payload);
-      if (index === -1) {
-        state.favorites.push(payload);
-      } else {
-        state.favorites.splice(index, 1);
-      }
+    setFavorite: (state, action) => {
+      const {id, value} = action.payload;
+      state.favorites[id] = value;
+      state.raw[id].favorite = value;
+    },
+    incrementOffset: state => {
+      state.offset += 1;
     },
     selectCharacter: (state, {payload}) => {
       state.selectedCharacterId = payload;
@@ -44,6 +45,7 @@ const charactersSlice = createSlice({
   },
 });
 
-export const {reset, toggleFavorite, selectCharacter} = charactersSlice.actions;
+export const {reset, setFavorite, incrementOffset, selectCharacter} =
+  charactersSlice.actions;
 
 export default charactersSlice.reducer;
