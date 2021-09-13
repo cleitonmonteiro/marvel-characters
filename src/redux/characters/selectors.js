@@ -27,13 +27,10 @@ export const getSelectedCharacter = createSelector(
 );
 
 export const getFavorites = createSelector(
-  getCharacters,
+  getRawCharacters,
   getFavoritesIds,
   (characters, favoritesIds) => {
-    const ids = Object.keys(favoritesIds);
-    return characters?.filter(
-      item => favoritesIds[item.id] && ids.includes(String(item.id)),
-    );
+    return favoritesIds.map(id => characters[id]);
   },
 );
 

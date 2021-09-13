@@ -21,12 +21,13 @@ export const fetchCharactersSucceeded = (state, action) => {
     data: {results},
   } = action.payload;
 
-  const newIds = new Set(state.home);
   results?.forEach(character => {
     const {id, name, description, thumbnail} = character;
     const {path, extension} = thumbnail;
 
-    newIds.add(id);
+    if (!state.home.includes(id)) {
+      state.home.push(id);
+    }
     state.raw[id] = {
       id,
       name,
@@ -34,7 +35,6 @@ export const fetchCharactersSucceeded = (state, action) => {
       imageUrl: `${path}.${extension}`,
     };
   });
-  state.home = Array.from(newIds);
 
   state.characters = results;
   state.loading = false;
