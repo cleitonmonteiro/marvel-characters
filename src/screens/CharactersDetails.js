@@ -46,7 +46,7 @@ export const CharactersDetails = ({route}) => {
             p={0}
             icon={
               <Icon
-                name={favorites[id] ? 'favorite' : 'favorite-outline'}
+                name={favorites.includes(id) ? 'favorite' : 'favorite-outline'}
                 size={30}
               />
             }

@@ -1,20 +1,12 @@
 import {FlatList, View} from 'native-base';
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {SCREENS} from '../navigation/constants';
+import {useSelector} from 'react-redux';
 import {getFavoritesIds} from '../redux/characters/selectors';
-import {selectCharacter, toggleFavorite} from '../redux/characters/slice';
 import ListItem from './Listitem';
 import EmptyList from './EmptyList';
 
-export const CharactersList = ({navigation, characters, emptyMessage}) => {
-  const dispatch = useDispatch();
+export const CharactersList = ({characters, emptyMessage}) => {
   const favoritesIds = useSelector(getFavoritesIds);
-
-  const handleDetailClick = id => {
-    dispatch(selectCharacter(id));
-    navigation.navigate(SCREENS.CHARACTERS_DETAILS);
-  };
 
   if (!characters?.length) {
     return <EmptyList message={emptyMessage} />;
@@ -27,11 +19,10 @@ export const CharactersList = ({navigation, characters, emptyMessage}) => {
         renderItem={({item}) => {
           return (
             <ListItem
+              id={item.id}
               title={item.name}
               imageUrl={item.imageUrl}
-              onTap={() => handleDetailClick(item.id)}
-              isFavorite={favoritesIds[item.id]}
-              onFavorite={() => dispatch(toggleFavorite(item.id))}
+              isFavorite={favoritesIds.includes(item.id)}
             />
           );
         }}

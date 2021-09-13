@@ -1,20 +1,33 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {memo, useCallback} from 'react';
 import {Image, Box, Heading, Row, IconButton} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {selectCharacter, toggleFavorite} from '../redux/characters/slice';
+import {useNavigation} from '@react-navigation/core';
+import {SCREENS} from '../navigation/constants';
 
 const ListItem = ({
+  id,
   title,
   isFavorite = false,
-  onTap,
-  onFavorite,
-  imageUrl = 'https://sample-example.nativebase.io/static/media/dawki-river.ebbf5434.png',
+  imageUrl,
   imageAlt = title,
 }) => {
   const iconName = isFavorite ? 'favorite' : 'favorite-outline';
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const handleDetailClick = useCallback(() => {
+    dispatch(selectCharacter(id));
+    navigation.navigate(SCREENS.CHARACTERS_DETAILS);
+  }, [id]);
+
+  const handleFavorite = useCallback(() => dispatch(toggleFavorite(id)), [id]);
 
   return (
-    <TouchableOpacity onPress={onTap} activeOpacity={0.9}>
+    <TouchableOpacity onPress={handleDetailClick} activeOpacity={0.9}>
       <Box bg="white" marginX="2" marginY="1" shadow={2} rounded="lg">
         <Row space={4} justifyContent="space-between" alignItems="center">
           <Image
@@ -33,7 +46,7 @@ const ListItem = ({
             icon={
               <Icon testID={`icon-${iconName}`} name={iconName} size={30} />
             }
-            onPress={onFavorite}
+            onPress={handleFavorite}
           />
         </Row>
       </Box>
@@ -41,4 +54,4 @@ const ListItem = ({
   );
 };
 
-export default ListItem;
+export default memo(ListItem);
