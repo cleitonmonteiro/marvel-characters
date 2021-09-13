@@ -6,9 +6,10 @@ import {
   Row,
   Stack,
   Text,
-  View,
+  ScrollView,
 } from 'native-base';
 import React from 'react';
+import {useWindowDimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -22,17 +23,18 @@ export const CharactersDetails = ({route}) => {
   const dispatch = useDispatch();
   const selectedCharacter = useSelector(getSelectedCharacter);
   const favorites = useSelector(getFavoritesIds);
-  const {name, description, id} = selectedCharacter;
+  const {name, description, id, imageUrl} = selectedCharacter;
+  const {width} = useWindowDimensions();
 
   return (
-    <View bg="white" height="100%">
+    <ScrollView bg="white">
       <Image
         source={{
-          uri: 'https://sample-example.nativebase.io/static/media/dawki-river.ebbf5434.png',
+          uri: imageUrl,
         }}
         alt="image base"
         resizeMode="cover"
-        height={200}
+        height={width}
         roundedTop="md"
       />
       <Stack space={4} p={[4, 4, 8]}>
@@ -56,7 +58,7 @@ export const CharactersDetails = ({route}) => {
           {handleEmptyDescription(description)}
         </Text>
       </Stack>
-    </View>
+    </ScrollView>
   );
 };
 

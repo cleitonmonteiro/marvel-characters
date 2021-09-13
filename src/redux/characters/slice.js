@@ -4,6 +4,8 @@ import * as actions from './actions';
 import {MODULE_NAME} from './constants';
 
 const initialState = {
+  raw: {},
+  home: [],
   characters: [],
   favorites: {},
   loading: false,

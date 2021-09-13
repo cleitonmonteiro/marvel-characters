@@ -62,5 +62,6 @@ buck-out/
 # env
 .env
 
-# api mocks
+# api config
 src/api/mocks*
+src/api/config*

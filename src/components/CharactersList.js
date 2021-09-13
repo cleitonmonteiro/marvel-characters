@@ -28,6 +28,7 @@ export const CharactersList = ({navigation, characters, emptyMessage}) => {
           return (
             <ListItem
               title={item.name}
+              imageUrl={item.imageUrl}
               onTap={() => handleDetailClick(item.id)}
               isFavorite={favoritesIds[item.id]}
               onFavorite={() => dispatch(toggleFavorite(item.id))}

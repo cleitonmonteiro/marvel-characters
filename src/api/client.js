@@ -2,21 +2,21 @@ import axios from 'axios';
 import md5 from 'blueimp-md5';
 
 import {timestamp} from '../utils/timeUtils';
+import {API_URL, API_PRIVATE_KEY, API_PUBLIC_KEY} from './config';
 
 export const makeDefaultParams = () => {
   const ts = timestamp();
-  const privateKey = process.env.API_PRIVATE_KEY;
-  const apikey = process.env.API_PUBLIC_KEY;
 
   return {
     ts,
-    apikey,
-    hash: md5(`${ts}${privateKey}${apikey}`),
+    orderBy: 'name',
+    apikey: API_PUBLIC_KEY,
+    hash: md5(`${ts}${API_PRIVATE_KEY}${API_PUBLIC_KEY}`),
   };
 };
 
 const client = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: API_URL,
   timeout: 3000,
 });
 

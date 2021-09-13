@@ -53,7 +53,7 @@ const RootNavigator = () => {
         screenOptions={({route}) => ({
           tabBarIcon: ({focused, color, size}) => {
             const props = {
-              Characters: {
+              Home: {
                 iconName: focused ? 'list' : 'list',
               },
               Favorites: {
@@ -73,7 +73,7 @@ const RootNavigator = () => {
         })}>
         <Tab.Screen
           options={{headerShown: false}}
-          name="Characters"
+          name="Home"
           component={StackNavigator}
         />
         <Tab.Screen

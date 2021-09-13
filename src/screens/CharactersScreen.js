@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {
-  getCharacters,
   getLoading,
   getHasError,
+  getHomeCharacters,
 } from '../redux/characters/selectors';
 import {fetchCharacters} from '../redux/characters/actions';
 import CharactersList from '../components/CharactersList';
@@ -13,7 +13,7 @@ import EmptyList from '../components/EmptyList';
 
 export const CharactersScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const characters = useSelector(getCharacters);
+  const characters = useSelector(getHomeCharacters);
   const isLoading = useSelector(getLoading);
   const hasError = useSelector(getHasError);
 
