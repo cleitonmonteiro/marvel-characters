@@ -2,7 +2,7 @@ import axios from 'axios';
 import md5 from 'blueimp-md5';
 
 import {timestamp} from '../utils/timeUtils';
-import {API_URL, API_PRIVATE_KEY, API_PUBLIC_KEY} from './config';
+import {API_PRIVATE_KEY, API_PUBLIC_KEY} from './config';
 
 export const makeDefaultParams = () => {
   const ts = timestamp();
@@ -16,7 +16,7 @@ export const makeDefaultParams = () => {
 };
 
 const client = axios.create({
-  baseURL: API_URL,
+  baseURL: 'http://gateway.marvel.com/v1/public',
   timeout: 3000,
 });
 
