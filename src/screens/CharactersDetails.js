@@ -8,6 +8,7 @@ import {
   Text,
   ScrollView,
   Box,
+  useTheme,
 } from 'native-base';
 import React from 'react';
 import {useWindowDimensions} from 'react-native';
@@ -19,6 +20,7 @@ import {handleEmptyDescription} from '../utils/uiUtils';
 
 export const CharactersDetails = () => {
   const dispatch = useDispatch();
+  const {colors} = useTheme();
   const selectedCharacter = useSelector(getSelectedCharacter);
   const {name, description, id, imageUrl, favorite} = selectedCharacter;
   const {width} = useWindowDimensions();
@@ -45,6 +47,7 @@ export const CharactersDetails = () => {
               <Icon
                 name={favorite ? 'favorite' : 'favorite-outline'}
                 size={30}
+                color={colors.primary[500]}
               />
             }
             onPress={() => dispatch(setFavorite({id, value: !favorite}))}

@@ -1,6 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {memo, useCallback} from 'react';
-import {Image, Box, Heading, Row, IconButton, Center} from 'native-base';
+import {
+  Image,
+  Box,
+  Heading,
+  Row,
+  IconButton,
+  Center,
+  useTheme,
+} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -18,6 +26,7 @@ const ListItem = ({
   const iconName = isFavorite ? 'favorite' : 'favorite-outline';
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const {colors} = useTheme();
 
   const handleDetailClick = useCallback(() => {
     dispatch(selectCharacter(id));
@@ -51,7 +60,12 @@ const ListItem = ({
             p={0}
             marginRight={2}
             icon={
-              <Icon testID={`icon-${iconName}`} name={iconName} size={30} />
+              <Icon
+                testID={`icon-${iconName}`}
+                name={iconName}
+                size={30}
+                color={colors.primary[500]}
+              />
             }
             onPress={handleFavorite}
           />

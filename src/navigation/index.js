@@ -10,7 +10,7 @@ import {SCREENS} from './constants';
 import Favorites from '../screens/Favorites';
 import ShareIcon from '../components/ShareIcon';
 import CharactersSearch from '../screens/CharactersSearch';
-import {IconButton} from 'native-base';
+import {IconButton, useTheme} from 'native-base';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,10 +47,12 @@ const StackNavigator = () => {
 const Tab = createBottomTabNavigator();
 
 const RootNavigator = () => {
+  const {colors} = useTheme();
   return (
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({route}) => ({
+          tabBarActiveTintColor: colors.primary[500],
           tabBarIcon: ({focused, color, size}) => {
             const props = {
               Home: {
