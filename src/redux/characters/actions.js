@@ -4,9 +4,9 @@ import * as charactersApi from '../../api/charactersApi';
 
 export const fetchCharacters = createAsyncThunk(
   FETCH_CHARACTERS,
-  async offset => {
-    const data = await charactersApi.fetchAll(offset);
-    return data;
+  async params => {
+    const data = await charactersApi.fetchAll(params);
+    return {data, params};
   },
 );
 
@@ -22,10 +22,12 @@ export const fetchCharactersFailed = (state, action) => {
 export const fetchCharactersSucceeded = (state, action) => {
   const {
     data: {results, offset, total},
-  } = action.payload;
+  } = action.payload.data;
+
+  const {nameStartsWith} = action.payload.params;
 
   // keeping only favorites on override
-  if (offset === 0) {
+  if (offset === 0 && !nameStartsWith) {
     const favorites = {};
     state.favorites = {};
     state.home = [];

@@ -1,17 +1,10 @@
 import client, {makeDefaultParams} from './client';
-import characters from './mocks/characters';
 
-export const fetchAll = offset => {
-  return new Promise((resolve, reject) =>
-    setTimeout(() => {
-      console.log('offset', offset);
-      resolve(characters);
-    }, 1000),
-  );
+export const fetchAll = params => {
   return new Promise((resolve, reject) =>
     client
       .get('/characters', {
-        params: {...makeDefaultParams(), offset},
+        params: {...makeDefaultParams(), ...params},
       })
       .then(({data}) => {
         resolve(data);

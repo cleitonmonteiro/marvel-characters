@@ -26,12 +26,12 @@ export const CharactersScreen = ({navigation}) => {
 
   const handleLoadMore = useCallback(() => {
     if (charactersSize < total) {
-      dispatch(fetchCharacters(offset));
+      dispatch(fetchCharacters({offset}));
     }
   }, [offset, charactersSize, total]);
 
   const handleInitialLoad = useCallback(() => {
-    dispatch(fetchCharacters(0));
+    dispatch(fetchCharacters({offset: 0}));
   }, [offset]);
 
   useEffect(handleInitialLoad, []);

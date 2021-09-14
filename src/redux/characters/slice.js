@@ -6,6 +6,7 @@ import {MODULE_NAME} from './constants';
 const initialState = {
   raw: {},
   home: [],
+  search: '',
   offset: 0,
   total: 0,
   favorites: {},
@@ -23,11 +24,11 @@ const charactersSlice = createSlice({
       state.favorites[id] = value;
       state.raw[id].favorite = value;
     },
-    incrementOffset: state => {
-      state.offset += 1;
-    },
     selectCharacter: (state, {payload}) => {
       state.selectedCharacterId = payload;
+    },
+    appyFilter: (state, {payload}) => {
+      state.search = payload;
     },
     reset: () => initialState,
   },
@@ -45,7 +46,7 @@ const charactersSlice = createSlice({
   },
 });
 
-export const {reset, setFavorite, incrementOffset, selectCharacter} =
+export const {reset, setFavorite, selectCharacter, appyFilter} =
   charactersSlice.actions;
 
 export default charactersSlice.reducer;
