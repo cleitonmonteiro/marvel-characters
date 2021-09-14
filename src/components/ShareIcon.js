@@ -11,7 +11,7 @@ export const ShareIcon = () => {
   const onShare = async () => {
     try {
       await Share.share({
-        message: `My Marvel Favorites: ${myFavorites} !`,
+        message: `These are my favorite Marvel characters: ${myFavorites} !`,
       });
     } catch (error) {
       // TODO: handle

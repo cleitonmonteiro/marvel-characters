@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {containsText} from '../../utils/collectionUtil';
+import {containsText, joinWithComma} from '../../utils/collectionUtil';
 import {MODULE_NAME} from './constants';
 
 export const getRawCharacters = state => state[MODULE_NAME].raw;
@@ -47,5 +47,5 @@ export const getSearchCharacters = createSelector(
 );
 
 export const getFavoritesNames = createSelector(getFavorites, favorites => {
-  return favorites.map(item => item.name).join(', ');
+  return joinWithComma(favorites.map(item => item.name));
 });
