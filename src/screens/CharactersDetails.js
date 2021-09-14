@@ -7,6 +7,7 @@ import {
   Stack,
   Text,
   ScrollView,
+  Box,
 } from 'native-base';
 import React from 'react';
 import {useWindowDimensions} from 'react-native';
@@ -35,9 +36,9 @@ export const CharactersDetails = () => {
       />
       <Stack space={4} p={[4, 4, 8]}>
         <Row justifyContent="space-between">
-          <Heading size={['md', 'lg', 'md']} noOfLines={2}>
-            {name}
-          </Heading>
+          <Box width="85%">
+            <Heading size="md">{name}</Heading>
+          </Box>
           <IconButton
             p={0}
             icon={

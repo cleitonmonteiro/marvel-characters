@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {memo, useCallback} from 'react';
-import {Image, Box, Heading, Row, IconButton} from 'native-base';
+import {Image, Box, Heading, Row, IconButton, Center} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
@@ -28,11 +28,10 @@ const ListItem = ({
     () => dispatch(setFavorite({id, value: !isFavorite})),
     [isFavorite],
   );
-  // TODO: fixes long title overflow
   return (
     <TouchableOpacity onPress={handleDetailClick} activeOpacity={0.9}>
       <Box bg="white" marginX="2" marginY="1" shadow={2} rounded="lg">
-        <Row space={4} justifyContent="space-between" alignItems="center">
+        <Row space={1} justifyContent="space-between" alignItems="center">
           <Image
             testID={`image-${title}`}
             source={{
@@ -42,7 +41,12 @@ const ListItem = ({
             size={'md'}
             alt={imageAlt}
           />
-          <Heading size="sm">{title}</Heading>
+          <Center width="60%">
+            <Heading size="sm" isTruncated>
+              {title}
+            </Heading>
+          </Center>
+
           <IconButton
             p={0}
             marginRight={2}
